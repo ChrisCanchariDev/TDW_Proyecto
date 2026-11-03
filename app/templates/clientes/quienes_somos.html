@@ -1,0 +1,52 @@
+{% extends 'clientes/_layout.html' %}
+{% block title %}Quiénes somos · Cooperativa Agraria YALPA{% endblock %}
+{% block eyebrow %}Quiénes somos{% endblock %}
+{% block heading %}Una cooperativa de Tacna que crece junto a sus socios{% endblock %}
+{% block intro %}Conoce la cooperativa que lleva la naranja, el aceite y las aceitunas de La Yarada a tu mesa.{% endblock %}
+
+{% block page %}
+<section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-12 items-center">
+        <figure class="lg:col-span-6 reveal">
+            <div class="leaf"><img src="{{ img('FotoTRES.jpg') }}" alt="Productores de YALPA en el campo de naranjos" class="w-full aspect-[4/3] object-cover" loading="lazy"></div>
+        </figure>
+        <div class="lg:col-span-6 lg:pl-6 reveal" style="--d:.1s">
+            <h2 class="h2">Cooperativa Agraria YALPA Limitada</h2>
+            <p class="lead mt-4">Estamos en La Yarada - Los Palos, frente al mar. Cultivamos naranja y olivo, y llevamos fruta fresca, aceite de oliva y aceitunas desde el campo hasta tu mesa.</p>
+            <p class="mt-4 text-muted max-w-[58ch]">Trabajar en cooperativa significa que cada productor comparte el esfuerzo y el resultado. Heredamos el trabajo en equipo de generaciones de productores de Tacna, y por eso cuidamos la calidad de cada cosecha y el bienestar de las familias que la hacen posible.</p>
+            <div class="mt-7 flex flex-wrap gap-3">
+                <a href="{{ url_for('clientes.productos') }}" class="btn btn-forest">Ver productos</a>
+                <a href="{{ url_for('nosotros.equipo') }}" class="btn btn-outline">Conocer al equipo</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="statement section">
+    <div class="container-x relative z-10 grid grid-cols-1 gap-12 lg:grid-cols-12 items-center">
+        <div class="lg:col-span-6 reveal">
+            <span class="eyebrow on-dark">Exportación</span>
+            <h2 class="h2 !text-white">Del desierto de Tacna a nuevos mercados</h2>
+            <p class="mt-4 text-lg max-w-[52ch]">Realizamos nuestra primera exportación en 2023 y seguimos abriendo puertas. Nuestros campos se manejan con estándares internacionales, en una región libre de mosca de la fruta.</p>
+            <div class="mt-7 inline-flex items-center gap-3 rounded-full bg-white/10 border border-white/20 px-5 py-2.5 text-sm font-semibold">
+                <i class="fa-solid fa-certificate text-orange" aria-hidden="true"></i> Campos certificados GlobalG.A.P.
+            </div>
+        </div>
+        <div class="lg:col-span-6 grid grid-cols-1 gap-3">
+            {% for code, name, note, tag, cls in [
+                ('US', 'Estados Unidos', 'Primera exportación en 2023', 'Activo', 'tag-ok'),
+                ('CL', 'Chile', 'Mercado abierto', 'Abierto', 'tag-ok'),
+                ('BR', 'Brasil', 'Apertura de mercado próxima', 'Pronto', 'tag-soon'),
+                ('CA', 'Canadá', 'País interesado', 'Interés', 'tag-int'),
+                ('MX', 'México', 'País interesado', 'Interés', 'tag-int')
+            ] %}
+            <div class="market reveal" style="--d: {{ loop.index0 * 0.08 }}s">
+                <span class="flag text-sm font-extrabold tracking-wider text-white" aria-hidden="true">{{ code }}</span>
+                <span><strong>{{ name }}</strong><small>{{ note }}</small></span>
+                <span class="tag {{ cls }}">{{ tag }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

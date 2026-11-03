@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% macro img(f) %}{{ url_for('static', filename='img/' ~ f) }}{% endmacro %}
+
+<!-- ============ HERO SLIDER ============ -->
+{% set slides = [
+    {'tab': 'Naranja', 'img': 'naranjaWASHINGTON.jpeg', 'pos': '50% 40%',
+     'title': 'Naranja de Tacna para el mundo',
+     'text': 'Washington Navel jugosa, con el equilibrio perfecto entre dulzor y acidez. Cultivada al sol del desierto en campos certificados GlobalG.A.P.',
+     'cta': 'Comprar naranjas', 'href': url_for('clientes.productos', categoria='naranja'),
+     'cta2': 'Conocer YALPA', 'href2': url_for('nosotros.quienes_somos')},
+    {'tab': 'Cooperativa', 'img': 'bannerUNO.jpeg', 'pos': '60% 50%',
+     'title': 'Lo mejor de nuestra tierra, directo a ti',
+     'text': 'Productores de Tacna que trabajan en equipo para ofrecerte calidad, buen sabor y precios competitivos.',
+     'cta': 'Ver productos', 'href': url_for('clientes.productos'),
+     'cta2': 'Nuestra historia', 'href2': url_for('nosotros.vision_mision')},
+    {'tab': 'Aceite', 'img': 'AceiteOliva.jpeg', 'pos': '50% 50%',
+     'title': 'Aceite de oliva extra virgen',
+     'text': 'Del olivar a tu mesa: el sabor de nuestros socios productores en cada botella.',
+     'cta': 'Comprar aceite', 'href': url_for('clientes.productos', categoria='aceite'),
+     'cta2': 'Ver catálogo', 'href2': url_for('clientes.productos')},
+    {'tab': 'Aceitunas', 'img': 'aceitunasYALPA.jpeg', 'pos': '38% 50%',
+     'title': 'Aceitunas negras en salmuera',
+     'text': 'Selección especial para tu mesa, tus recetas y tu tabla de quesos.',
+     'cta': 'Comprar aceitunas', 'href': url_for('clientes.productos', categoria='aceitunas'),
+     'cta2': 'Ver catálogo', 'href2': url_for('clientes.productos')}
+] %}
+
+<section id="heroSlider" class="hero" aria-roledescription="carrusel" aria-label="Productos y novedades de YALPA" tabindex="-1">
+    {% for s in slides %}
+    <article class="hero-slide {% if loop.first %}is-active{% endif %}" aria-roledescription="diapositiva" aria-label="{{ loop.index }} de {{ slides|length }}" {% if not loop.first %}aria-hidden="true"{% endif %}>
+        <div class="hero-media">
+            <img src="{{ img(s.img) }}" alt="{{ s.title }}" style="object-position: {{ s.pos }}" {% if not loop.first %}loading="lazy"{% endif %}>        </div>
+            </div>
+        <div class="hero-copy">
+            {% if loop.first %}<h1 class="display">{{ s.title }}</h1>{% else %}<h2 class="display">{{ s.title }}</h2>{% endif %}
+            <p>{{ s.text }}</p>
+            <div class="hero-actions">
+                <a href="{{ s.href }}" class="btn btn-gold">{{ s.cta }} <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i></a>
+                <a href="{{ s.href2 }}" class="btn btn-ghost">{{ s.cta2 }}</a>
+            </div>
+        </div>
+    </article>
+    {% endfor %}
+
+    <div class="hero-controls">
+        <div class="inner">
+            <div class="hero-tabs" role="tablist" aria-label="Elegir diapositiva">
+                {% for s in slides %}
+                <button type="button" class="hero-tab {% if loop.first %}is-active{% endif %}" role="tab" aria-selected="{{ 'true' if loop.first else 'false' }}" aria-label="Ir a {{ s.tab }}">
+                    <span class="label">{{ s.tab }}</span>
+                    <span class="bar"><i></i></span>
+                </button>
+                {% endfor %}
+            </div>
+            <div class="hero-nav">
+                <button type="button" id="heroPause" aria-label="Pausar carrusel"><i class="fa-solid fa-pause text-sm"></i></button>
+                <button type="button" id="heroPrev" aria-label="Diapositiva anterior"><i class="fa-solid fa-chevron-left text-sm"></i></button>
+                <button type="button" id="heroNext" aria-label="Diapositiva siguiente"><i class="fa-solid fa-chevron-right text-sm"></i></button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ PILARES ============ -->
+<section class="bg-white border-b border-line">
+    <div class="container-x py-8 grid gap-6 md:grid-cols-3 md:divide-x md:divide-line">
+        <div class="pillar md:pr-6"><span class="ico"><i class="fa-solid fa-certificate"></i></span><div><p class="font-bold text-forest leading-tight">Campos certificados GlobalG.A.P.</p><p class="text-sm text-muted">Estándares internacionales</p></div></div>
+        <div class="pillar md:px-6"><span class="ico"><i class="fa-solid fa-shield-halved"></i></span><div><p class="font-bold text-forest leading-tight">Región libre de mosca de la fruta</p><p class="text-sm text-muted">Fruta sana, lista para exportar</p></div></div>
+        <div class="pillar md:pl-6"><span class="ico"><i class="fa-solid fa-earth-americas"></i></span><div><p class="font-bold text-forest leading-tight">Exportamos desde Tacna</p><p class="text-sm text-muted">Estados Unidos y Chile</p></div></div>
+    </div>
+</section>
+
+<!-- ============ PRODUCTOS DESTACADOS ============ -->
+<section id="productos" class="section">
+    <div class="container-x">
+        <div class="flex flex-wrap items-end justify-between gap-4 mb-10 reveal">
+            <div>
+                <span class="eyebrow">Del campo a tu mesa</span>
+                <h2 class="h2">Nuestros productos</h2>
+                <p class="lead mt-2">Tres cultivos, una misma forma de trabajar: con calidad y con los socios.</p>
+            </div>
+            <a href="{{ url_for('clientes.productos') }}" class="btn btn-outline">Ver catálogo completo</a>
+        </div>
+
+        <div class="grid gap-5 lg:grid-cols-5 lg:grid-rows-2">
+            <a href="{{ url_for('clientes.productos', categoria='naranja') }}" class="tile reveal lg:col-span-3 lg:row-span-2 min-h-[22rem]">
+                <img src="{{ img('naranjaWASHINGTON.jpeg') }}" alt="Naranja Washington Navel" loading="lazy">
+                <span class="body"><span class="h3 block text-2xl md:text-3xl">Naranja Washington Navel</span><span class="text-[#E6F1E2]">Deliciosa, jugosa y dulce</span><br><span class="pill">Ver producto <i class="fa-solid fa-arrow-right text-[.7rem]"></i></span></span>
+            </a>
+            <a href="{{ url_for('clientes.productos', categoria='aceite') }}" class="tile reveal lg:col-span-2" style="--d:.1s">
+                <img src="{{ img('AceiteOliva.jpeg') }}" alt="Aceite de oliva extra virgen" loading="lazy">
+                <span class="body"><span class="h3 block">Aceite de oliva</span><span class="text-[#E6F1E2] text-sm">Extra virgen</span><br><span class="pill">Ver producto <i class="fa-solid fa-arrow-right text-[.7rem]"></i></span></span>
+            </a>
+            <a href="{{ url_for('clientes.productos', categoria='aceitunas') }}" class="tile reveal lg:col-span-2" style="--d:.2s">
+                <img src="{{ img('aceitunasYALPA.jpeg') }}" alt="Aceitunas negras YALPA" loading="lazy" style="object-position: 35% 50%">
+                <span class="body"><span class="h3 block">Aceitunas</span><span class="text-[#E6F1E2] text-sm">Selección especial</span><br><span class="pill">Ver producto <i class="fa-solid fa-arrow-right text-[.7rem]"></i></span></span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ============ PRODUCCIÓN ============ -->
+<section id="produccion" class="section section-mist">
+    <div class="container-x">
+        <div class="max-w-2xl mb-10 reveal">
+            <span class="eyebrow">Producción</span>
+            <h2 class="h2">Sol todo el año, suelos fértiles y una cosecha que vale la espera</h2>
+            <p class="lead mt-4">Nuestra naranja crece en clima desértico, con muchas horas de sol y agua de subsuelo. El resultado: fruta de muy alta calidad, con el equilibrio entre dulzor y acidez que tanto gusta.</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat reveal"><p class="num" data-count="100">100</p><p class="cap">hectáreas de cultivo de naranja</p></div>
+            <div class="stat reveal" style="--d:.08s"><p class="num" data-count="50">50<sup>t</sup></p><p class="cap">toneladas por hectárea</p></div>
+            <div class="stat reveal" style="--d:.16s"><p class="num">2 mil</p><p class="cap">hectáreas de naranja en La Yarada - Los Palos</p></div>
+            <div class="stat reveal" style="--d:.24s"><p class="num">5</p><p class="cap">meses de campaña, de marzo a julio</p></div>
+        </div>
+
+        <div class="mt-10 reveal">
+            <p class="font-bold text-forest mb-3">Calendario de cosecha</p>
+            <div class="season" id="harvestCalendar" role="list" aria-label="Meses de cosecha de naranja">
+                {% for m, on in [('Ene',0),('Feb',0),('Mar',1),('Abr',1),('May',1),('Jun',1),('Jul',1),('Ago',0),('Sep',0),('Oct',0),('Nov',0),('Dic',0)] %}
+                <div class="month {% if on %}is-on{% endif %}" style="--i: {{ loop.index0 }}" role="listitem" {% if on %}aria-label="{{ m }}: temporada de cosecha"{% endif %}>
+                    <i class="fa-solid {% if on %}fa-circle{% else %}fa-minus{% endif %}" aria-hidden="true"></i>{{ m }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ NOSOTROS (resumen; el detalle vive en /nosotros/...) ============ -->
+<section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-12 items-center">
+        <figure class="lg:col-span-6 reveal">
+            <div class="leaf"><img src="{{ img('FotoTRES.jpg') }}" alt="Productores de YALPA en el campo de naranjos" class="w-full aspect-[4/3] object-cover" loading="lazy"></div>
+        </figure>
+        <div class="lg:col-span-6 lg:pl-6 reveal" style="--d:.1s">
+            <span class="eyebrow">Quiénes somos</span>
+            <h2 class="h2">Una cooperativa de Tacna que crece junto a sus socios</h2>
+            <p class="lead mt-4">Somos la Cooperativa Agraria YALPA Limitada, en La Yarada - Los Palos, frente al mar. Cultivamos naranja y olivo, y llevamos fruta fresca, aceite de oliva y aceitunas desde el campo hasta tu mesa.</p>
+            <div class="mt-7 flex flex-wrap gap-3">
+                <a href="{{ url_for('nosotros.quienes_somos') }}" class="btn btn-forest">Conoce la cooperativa</a>
+                <a href="{{ url_for('nosotros.equipo') }}" class="btn btn-outline">Conocer al equipo</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ CTA FINAL (solo visitantes sin cuenta) ============ -->
+{% if not current_user %}
+<section class="pb-20">
+    <div class="container-x">
+        <div class="cta-band px-8 py-12 md:px-14 md:py-14 flex flex-col md:flex-row md:items-center md:justify-between gap-6 reveal" style="border-radius: var(--leaf-radius)">
+            <div class="relative z-10">
+                <h2 class="h2">Únete a nuestra comunidad</h2>
+                <p class="mt-2 max-w-xl">Regístrate para comprar más rápido, recibir ofertas y hacer seguimiento de tus pedidos.</p>
+            </div>
+            <a href="{{ url_for('auth.registro') }}" class="btn btn-forest self-start md:self-auto relative z-10">Crear mi cuenta <i class="fa-solid fa-arrow-right text-xs"></i></a>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

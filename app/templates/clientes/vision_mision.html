@@ -1,0 +1,22 @@
+{% extends 'clientes/_layout.html' %}
+{% block title %}Visión y misión · Cooperativa Agraria YALPA{% endblock %}
+{% block eyebrow %}Misión y visión{% endblock %}
+{% block heading %}Hacia dónde vamos y por qué trabajamos{% endblock %}
+{% block intro %}Lo que nos mueve cada día y la cooperativa que queremos ser.{% endblock %}
+
+{% block page %}
+<section class="section">
+    <div class="container-x grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div class="bg-white border border-line p-8 md:p-10 reveal" style="border-radius: var(--leaf-radius); box-shadow: var(--shadow-sm)">
+            <span class="pillar"><span class="ico"><i class="fa-solid fa-bullseye"></i></span></span>
+            <h2 class="h3 text-forest mt-5 mb-3">Misión</h2>
+            <p class="text-lg leading-relaxed text-muted">Contribuir al desarrollo de nuestros clientes comercializando naranjas saludables, con un proceso productivo eficiente y el trabajo en equipo heredado de generaciones de productores de Tacna. Así ofrecemos precios competitivos y un producto de buena calidad y sabor.</p>
+        </div>
+        <div class="bg-white border border-line p-8 md:p-10 reveal" style="border-radius: var(--leaf-radius); box-shadow: var(--shadow-sm); --d:.1s">
+            <span class="pillar"><span class="ico"><i class="fa-solid fa-eye"></i></span></span>
+            <h2 class="h3 text-forest mt-5 mb-3">Visión</h2>
+            <p class="text-lg leading-relaxed text-muted">Ser una cooperativa de referencia por la calidad de sus productos y por su compromiso social y sostenible, llevando la naranja de Tacna a más mercados del mundo.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

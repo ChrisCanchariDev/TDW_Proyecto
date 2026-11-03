@@ -1,0 +1,21 @@
+{% extends 'clientes/_layout.html' %}
+{% block title %}Equipo · Cooperativa Agraria YALPA{% endblock %}
+{% block eyebrow %}Equipo{% endblock %}
+{% block heading %}Las personas detrás de cada cosecha{% endblock %}
+{% block intro %}Socios y equipo de la cooperativa trabajan juntos para que cada producto llegue con la calidad que esperas.{% endblock %}
+
+{% block page %}
+{# Reemplaza las fotos y textos por tus socios y cargos reales cuando los tengas. #}
+<section class="section">
+    <div class="container-x grid grid-cols-1 gap-6 md:grid-cols-12 md:items-end">
+        <figure class="md:col-span-7 reveal">
+            <div class="leaf"><img src="{{ img('FotoUNO.jpg') }}" alt="Equipo de YALPA con cajas de fruta" class="w-full aspect-[4/3] object-cover" loading="lazy"></div>
+            <figcaption class="figure-cap">Equipo de YALPA junto a la fruta de la temporada.</figcaption>
+        </figure>
+        <figure class="md:col-span-5 reveal" style="--d:.12s">
+            <div class="leaf"><img src="{{ img('FotoDOS.jpg') }}" alt="Productora socia entre los naranjos" class="w-full aspect-[4/5] object-cover object-top" loading="lazy"></div>
+            <figcaption class="figure-cap">Productora socia entre los naranjos.</figcaption>
+        </figure>
+    </div>
+</section>
+{% endblock %}

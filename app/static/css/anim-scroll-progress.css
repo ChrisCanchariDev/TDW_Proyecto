@@ -1,0 +1,28 @@
+/* ==========================================================================
+   Animación 1 · Barra de progreso de lectura
+   Una línea naranja → verde fija arriba que crece con el scroll de la página.
+   El ancho se controla con la variable --progress (0 a 1) que escribe JS.
+   ========================================================================== */
+.scroll-progress {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 90; height: 4px;
+    background: transparent; pointer-events: none;
+}
+.scroll-progress > span {
+    display: block; height: 100%; width: 100%;
+    background: linear-gradient(90deg, var(--orange), var(--amber) 55%, var(--sprout));
+    box-shadow: 0 0 10px rgba(242, 140, 18, .55);
+    transform-origin: left center;
+    transform: scaleX(var(--progress, 0));
+    transition: transform .12s linear;
+    will-change: transform;
+}
+
+/* Modo oscuro: más brillo para que contraste con el fondo */
+[data-theme="dark"] .scroll-progress > span { box-shadow: 0 0 12px rgba(242, 140, 18, .8); }
+
+/* Sin animación si la persona lo pidió: la barra sigue informando, sin suavizado */
+@media (prefers-reduced-motion: reduce) {
+    .scroll-progress > span { transition: none !important; }
+}
+/* No se imprime */
+@media print { .scroll-progress { display: none; } }

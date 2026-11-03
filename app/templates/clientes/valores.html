@@ -1,0 +1,24 @@
+{% extends 'clientes/_layout.html' %}
+{% block title %}Valores · Cooperativa Agraria YALPA{% endblock %}
+{% block eyebrow %}Nuestros valores{% endblock %}
+{% block heading %}Lo que guía nuestro trabajo{% endblock %}
+{% block intro %}Cinco valores que aplicamos en el campo, en la cooperativa y en cada entrega.{% endblock %}
+
+{% block page %}
+<section class="section">
+    <div class="container-x max-w-3xl">
+        {% for icon, title, text in [
+            ('fa-handshake-angle', 'Cooperación', 'Nadie produce solo: compartimos trabajo, decisiones y resultados.'),
+            ('fa-shield-halved',   'Calidad',     'Cuidamos cada etapa, de la cosecha al empaque.'),
+            ('fa-seedling',        'Sostenibilidad', 'Cultivamos pensando en la tierra que seguirá produciendo mañana.'),
+            ('fa-people-group',    'Compromiso social', 'El crecimiento de la cooperativa debe llegar a las familias socias.'),
+            ('fa-scale-balanced',  'Transparencia', 'Explicamos cómo trabajamos y rendimos cuentas a nuestros socios.')
+        ] %}
+        <div class="value-row reveal" style="--d: {{ loop.index0 * 0.06 }}s">
+            <span class="ico"><i class="fa-solid {{ icon }}"></i></span>
+            <div><h2>{{ title }}</h2><p>{{ text }}</p></div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,46 @@
+.season.is-armed:not(.is-playing) .month { opacity: 0; }
+
+.season.is-playing .month {
+    animation: month-pop .55s var(--ease) backwards;
+    animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+/* Meses de campaña: destello que cruza el mes, justo después de aparecer */
+.season .month.is-on { position: relative; overflow: hidden; }
+.season .month.is-on::after {
+    content: ''; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .55), transparent);
+    transform: skewX(-18deg); opacity: 0; pointer-events: none;
+}
+.season.is-playing .month.is-on::after {
+    animation: month-sheen .9s ease-out forwards;
+    animation-delay: calc(var(--i, 0) * 70ms + 450ms);
+}
+/* El icono "late" una vez cuando el mes se activa */
+.season.is-playing .month.is-on i {
+    animation: month-beat .5s var(--ease) backwards;
+    animation-delay: calc(var(--i, 0) * 70ms + 300ms);
+}
+
+@keyframes month-pop {
+    0%   { opacity: 0; transform: translateY(18px) scale(.6); }
+    70%  { opacity: 1; transform: translateY(-4px) scale(1.06); }
+    100% { opacity: 1; transform: none; }
+}
+@keyframes month-sheen {
+    0%   { left: -60%; opacity: 0; }
+    20%  { opacity: 1; }
+    100% { left: 130%; opacity: 0; }
+}
+@keyframes month-beat {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.45); }
+}
+
+/* Reducir movimiento: calendario estático y siempre visible */
+@media (prefers-reduced-motion: reduce) {
+    .season.is-armed:not(.is-playing) .month { opacity: 1; }
+    .season.is-playing .month,
+    .season.is-playing .month.is-on i,
+    .season.is-playing .month.is-on::after { animation: none !important; }
+}

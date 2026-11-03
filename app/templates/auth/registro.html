@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear cuenta · Cooperativa Agraria YALPA{% endblock %}
+
+{% block content %}
+<section class="container-x py-10 md:py-14">
+    <div class="grid lg:grid-cols-12 overflow-hidden border border-line bg-white shadow-[0_34px_60px_-30px_rgba(11,61,36,.45)]" style="border-radius: var(--leaf-radius)">
+
+        <!-- Panel visual -->
+        <div class="relative lg:col-span-5 min-h-[18rem] lg:min-h-[640px] text-white">
+            <img src="{{ url_for('static', filename='img/FotoDOS.jpg') }}" alt="Productora socia de YALPA entre los naranjos" class="absolute inset-0 w-full h-full object-cover object-top">
+            <div class="absolute inset-0 bg-gradient-to-t from-forest via-forest/75 to-forest/10"></div>
+            <div class="relative h-full flex flex-col justify-end p-8 md:p-10">
+                <span class="eyebrow on-dark">Cooperativa YALPA</span>
+                <h2 class="display !text-3xl md:!text-4xl">Únete a nuestra comunidad</h2>
+                <p class="mt-2 text-[#E6F1E2] text-sm">Regístrate y disfruta los beneficios de nuestra cooperativa.</p>
+                <ul class="mt-5 space-y-2.5 text-sm font-medium">
+                    {% for b in ['Compra más rápida', 'Recibe ofertas especiales', 'Seguimiento de pedidos', 'Gestiona tus datos'] %}
+                    <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-orange" aria-hidden="true"></i>{{ b }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Formulario -->
+        <div class="lg:col-span-7 p-8 md:p-12">
+            <h1 class="h2 mb-1">Crear cuenta</h1>
+            <p class="text-muted mb-7">Completa tus datos. Todos los campos son obligatorios. Al terminar iniciarás sesión automáticamente.</p>
+
+            <form id="registerForm" action="{{ url_for('auth.registro') }}" method="POST" class="space-y-5">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                {% if next_url %}<input type="hidden" name="next" value="{{ next_url }}">{% endif %}
+
+                <div class="field">
+                    <label for="nombre">Nombre completo *</label>
+                    <div class="field-icon"><i class="fa-regular fa-user lead-ico" aria-hidden="true"></i>
+                        <input type="text" id="nombre" name="nombre" required minlength="2" maxlength="150" autocomplete="name" value="{{ form.get('nombre', '') }}" placeholder="Tu nombre completo" class="input"></div>
+                </div>
+
+                <div class="field">
+                    <label for="correo">Correo electrónico *</label>
+                    <div class="field-icon"><i class="fa-regular fa-envelope lead-ico" aria-hidden="true"></i>
+                        <input type="email" id="correo" name="correo" required maxlength="255" autocomplete="email" value="{{ form.get('correo', '') }}" placeholder="tucorreo@ejemplo.com" class="input"></div>
+                </div>
+
+                <div class="field">
+                    <label for="telefono">Teléfono *</label>
+                    <div class="field-icon"><i class="fa-solid fa-phone lead-ico" aria-hidden="true"></i>
+                        <input type="tel" id="telefono" name="telefono" required inputmode="tel" maxlength="20" autocomplete="tel" value="{{ form.get('telefono', '') }}" placeholder="Ej. 979 999 883" class="input"></div>
+                </div>
+
+                <div class="field">
+                    <label for="password">Contraseña *</label>
+                    <div class="field-icon"><i class="fa-solid fa-lock lead-ico" aria-hidden="true"></i>
+                        <input type="password" id="password" name="password" minlength="8" maxlength="128" required autocomplete="new-password" placeholder="Mínimo 8 caracteres" class="input !pr-11">
+                        <button type="button" class="toggle-pass" data-toggle-password="password" aria-label="Mostrar contraseña"><i class="fa-regular fa-eye" aria-hidden="true"></i></button>
+                    </div>
+                    <div id="strengthBar" class="flex gap-1 mt-2" aria-hidden="true">
+                        <span class="h-1.5 flex-1 rounded-full bg-gray-200"></span><span class="h-1.5 flex-1 rounded-full bg-gray-200"></span>
+                        <span class="h-1.5 flex-1 rounded-full bg-gray-200"></span><span class="h-1.5 flex-1 rounded-full bg-gray-200"></span>
+                    </div>
+                    <div class="flex justify-between gap-2 min-h-[1rem] mt-1">
+                        <span id="strengthLabel" class="text-xs font-bold" aria-live="polite"></span>
+                        <span id="strengthHint" class="text-[11px] text-muted text-right"></span>
+                    </div>
+                </div>
+
+                <div id="errorMessage" class="flash flash-error" role="alert" {% if not error %}hidden{% endif %}>{{ error or '' }}</div>
+
+                <button type="submit" class="btn btn-gold w-full !py-3.5">Crear cuenta</button>
+
+                <p class="text-center text-sm text-muted">¿Ya tienes cuenta? <a href="{{ url_for('auth.login', next=next_url) }}" class="text-orange-deep font-bold hover:underline">Inicia sesión</a></p>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
